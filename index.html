@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <!-- Referrer policy required so Cloud TTS MP3 streams for Bangla & Arabic play without CORS/403 blocks -->
+  <meta name="referrer" content="no-referrer" />
+  <meta name="theme-color" content="#FF6B8B" />
+  <title>আমার তিন ভাষার বই — My Little Learning Book</title>
+
+  <!-- Google Fonts for Bengali, English, and Arabic -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Hind+Siliguri:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       STEP 1: CSS VARIABLES & CHILD-FRIENDLY VISUAL DESIGN SYSTEM
+       ========================================================================== */
+    :root {
+      --bg-gradient: linear-gradient(160deg, #FFFDF9 0%, #EBF4FF 50%, #FFF0F5 100%);
+      --primary: #FF6B8B;
+      --primary-dark: #D94668;
+      --secondary: #2EC4B6;
+      --secondary-dark: #1B998B;
+      --accent-purple: #845EC2;
+      --accent-yellow: #FFD166;
+      --text-dark: #2B2D42;
+      --text-muted: #5C6479;
+      --card-shadow: 0 12px 28px rgba(43, 45, 66, 0.10);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      font-family: 'Hind Siliguri', 'Nunito', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* ==========================================================================
+       STEP 2: TOP NAVIGATION BAR
+       ========================================================================== */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+      border-bottom: 3px solid #FFE3EC;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .brand-logo {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #FF6B8B, #FF8E53);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: white;
+      box-shadow: 0 4px 10px rgba(255, 107, 139, 0.35);
+    }
+
+    .brand-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.15;
+    }
+
+    .brand-subtitle {
+      font-size: 0.8rem;
+      color: var(--primary-dark);
+      font-weight: 600;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      border: none;
+      background: #FFF0F5;
+      color: var(--primary-dark);
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 9px 14px;
+      border-radius: 50px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 3px 0 #FFCCD8;
+      transition: transform 0.12s ease;
+    }
+
+    .nav-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 0 0 #FFCCD8;
+    }
+
+    .nav-btn.primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 4px 0 var(--primary-dark);
+    }
+
+    .nav-btn.game-btn {
+      background: #E8F8F5;
+      color: #0E7C7B;
+      box-shadow: 0 4px 0 #B2EBE0;
+    }
+
+    .nav-btn.guide-btn {
+      background: #F3E8FF;
+      color: #6B21A8;
+      box-shadow: 0 4px 0 #D8B4FE;
+    }
+
+    /* ==========================================================================
+       STEP 3: MAIN CONTAINER & HOME SCREEN LAYOUT
+       ========================================================================== */
+    .app-container {
+      max-width: 980px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 18px 14px 96px;
+      flex: 1;
+    }
+
+    .hero-banner {
+      background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%);
+      border-radius: var(--radius-xl);
+      padding: 22px 18px;
+      text-align: center;
+      margin-bottom: 22px;
+      box-shadow: var(--card-shadow);
+      border: 4px solid #fff;
+    }
+
+    .hero-banner h1 {
+      font-size: clamp(1.6rem, 4.5vw, 2.3rem);
+      color: #3D1E36;
+      margin-bottom: 4px;
+    }
+
+    .hero-banner p {
+      font-size: clamp(1rem, 2.8vw, 1.2rem);
+      color: #5E2B52;
+      font-weight: 600;
+    }
+
+    .hero-badges {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .badge-pill {
+      background: rgba(255, 255, 255, 0.92);
+      padding: 5px 13px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #3D1E36;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
+
+    .game-launch-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .game-card-banner {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: 15px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 3px solid #E2F0CB;
+      box-shadow: var(--card-shadow);
+      cursor: pointer;
+      transition: transform 0.18s ease;
+    }
+
+    .game-card-banner:hover {
+      transform: translateY(-3px);
+    }
+
+    .section-heading {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-dark);
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 18px;
+    }
+
+    .category-card {
+      background: #fff;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      border: 4px solid #fff;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .category-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px rgba(43, 45, 66, 0.14);
+    }
+
+    .category-img-wrap {
+      width: 100%;
+      height: 170px;
+      position: relative;
+      overflow: hidden;
+      background: #F4F6F9;
+    }
+
+    .category-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.35s ease;
+    }
+
+    .category-card:hover .category-img-wrap img {
+      transform: scale(1.06);
+    }
+
+    .category-count-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.94);
+      padding: 4px 11px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .category-body {
+      padding: 14px 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+      justify-content: space-between;
+    }
+
+    .category-title-bn {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .category-title-sub {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .open-book-btn {
+      width: 100%;
+      border: none;
+      padding: 11px;
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      background: var(--primary);
+      box-shadow: 0 4px 0 var(--primary-dark);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    /* ==========================================================================
+       STEP 4: INTERACTIVE BOOK PAGE & REAL PHOTO STAGE
+       ========================================================================== */
+    .book-view {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .book-top-progress {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      padding: 12px 16px;
+      border-radius: 18px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .progress-pill-bar {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .progress-dot {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: #E2E8F0;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .progress-dot.active {
+      width: 28px;
+      border-radius: 10px;
+      background: var(--primary);
+    }
+
+    .book-card {
+      background: #fff;
+      border-radius: 30px;
+      padding: 20px;
+      box-shadow: 0 16px 38px rgba(43, 45, 66, 0.11);
+      border: 4px solid #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .photo-stage {
+      width: 100%;
+      max-width: 540px;
+      height: clamp(230px, 42vw, 340px);
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      background: #F8FAFC;
+      border: 5px solid #FFF0F5;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .photo-stage img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .photo-stage.bounce img {
+      transform: scale(1.08);
+    }
+
+    .photo-tap-hint {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.94);
+      padding: 5px 13px;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+      pointer-events: none;
+    }
+
+    .color-badge-overlay {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 4px solid #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    /* ==========================================================================
+       STEP 5: TRILINGUAL WORD & PRONUNCIATION CARDS
+       ========================================================================== */
+    .words-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      width: 100%;
+    }
+
+    @media (max-width: 680px) {
+      .words-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .lang-card {
+      border-radius: 20px;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border: 3px solid transparent;
+      transition: transform 0.18s, box-shadow 0.18s;
+      cursor: pointer;
+    }
+
+    .lang-card.bn-card {
+      background: #FFF0F5;
+      border-color: #FFCCD8;
+    }
+
+    .lang-card.en-card {
+      background: #EBF8FF;
+      border-color: #BEE3F8;
+    }
+
+    .lang-card.ar-card {
+      background: #F0FFF4;
+      border-color: #C6F6D5;
+    }
+
+    .lang-card.playing {
+      transform: scale(1.03);
+      box-shadow: 0 0 0 4px var(--accent-yellow), 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .lang-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 3px 11px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--text-muted);
+    }
+
+    .word-text-bn {
+      font-size: clamp(1.7rem, 4vw, 2.2rem);
+      font-weight: 700;
+      color: #C9184A;
+      text-align: center;
+    }
+
+    .word-text-en {
+      font-family: 'Nunito', sans-serif;
+      font-size: clamp(1.6rem, 4vw, 2.1rem);
+      font-weight: 900;
+      color: #1D4ED8;
+      text-align: center;
+    }
+
+    .word-text-ar {
+      font-family: 'Amiri', serif;
+      font-size: clamp(2rem, 4.8vw, 2.6rem);
+      font-weight: 700;
+      color: #15803D;
+      direction: rtl;
+      text-align: center;
+      line-height: 1.25;
+    }
+
+    .phonetic-hint {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .speak-btn {
+      width: 100%;
+      border: none;
+      padding: 11px 14px;
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .speak-btn.bn-btn {
+      background: #FF4D6D;
+      box-shadow: 0 4px 0 #C9184A;
+    }
+
+    .speak-btn.en-btn {
+      background: #3B82F6;
+      box-shadow: 0 4px 0 #1D4ED8;
+    }
+
+    .speak-btn.ar-btn {
+      background: #10B981;
+      box-shadow: 0 4px 0 #047857;
+    }
+
+    .book-controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .page-nav-btn {
+      border: none;
+      background: #EDF2F7;
+      color: var(--text-dark);
+      font-family: inherit;
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: 13px 20px;
+      border-radius: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 0 #CBD5E0;
+    }
+
+    .page-nav-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .play-all-btn {
+      flex: 1;
+      min-width: 200px;
+      border: none;
+      background: linear-gradient(135deg, #845EC2, #D65DB1);
+      color: #fff;
+      font-family: inherit;
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: 13px 18px;
+      border-radius: 16px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #5E3A98;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    /* ==========================================================================
+       STEP 6: GAMES & PARENT/DEVELOPER GUIDE MODAL
+       ========================================================================== */
+    .game-container {
+      background: #fff;
+      border-radius: 28px;
+      padding: 22px;
+      box-shadow: var(--card-shadow);
+      border: 4px solid #E2F0CB;
+      text-align: center;
+    }
+
+    .game-lang-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .lang-tab {
+      border: 2px solid #E2E8F0;
+      background: #F8FAFC;
+      padding: 7px 16px;
+      border-radius: 30px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+    }
+
+    .lang-tab.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .game-choices-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    @media (max-width: 640px) {
+      .game-choices-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .game-choice-card {
+      background: #F8FAFC;
+      border: 4px solid #E2E8F0;
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.18s, border-color 0.18s;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .game-choice-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--secondary);
+    }
+
+    .game-choice-card img {
+      width: 100%;
+      height: 165px;
+      object-fit: cover;
+      border-radius: 14px;
+    }
+
+    .game-feedback {
+      margin-top: 16px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      min-height: 36px;
+    }
+
+    .guide-box {
+      background: #fff;
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: var(--card-shadow);
+      line-height: 1.6;
+    }
+
+    .code-export-area {
+      width: 100%;
+      height: 160px;
+      background: #1E293B;
+      color: #F8FAFC;
+      padding: 12px;
+      border-radius: 12px;
+      font-family: monospace;
+      font-size: 0.82rem;
+      margin-top: 8px;
+      overflow: auto;
+    }
+
+    .audio-status-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.96);
+      border-top: 2px solid #FFE3EC;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      z-index: 90;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #10B981;
+      margin-right: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAVIGATION BAR -->
+  <header class="top-bar">
+    <div class="brand-group" onclick="App.goHome()">
+      <div class="brand-logo">📚</div>
+      <div>
+        <div class="brand-title">আমার তিন ভাষার বই</div>
+        <div class="brand-subtitle">বাংলা • English • العربية</div>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <button class="nav-btn primary" onclick="App.goHome()">🏠 হোম</button>
+      <button class="nav-btn game-btn" onclick="App.startGame('find-pic')">🎮 ছবি খুঁজুন</button>
+      <button class="nav-btn game-btn" onclick="App.startGame('match-word')">🧩 শব্দ মেলাও</button>
+      <button class="nav-btn guide-btn" onclick="App.renderParentGuide()">📋 অভিভাবক গাইড</button>
+    </div>
+  </header>
+
+  <!-- MAIN DYNAMIC VIEW CONTAINER -->
+  <main class="app-container" id="appRoot"></main>
+
+  <!-- BOTTOM AUDIO STATUS BAR -->
+  <footer class="audio-status-bar">
+    <div>
+      <span class="status-dot"></span>
+      <span id="audioStatusText">অডিও প্রস্তুত: বাংলা, English ও العربية সক্রিয় রয়েছে।</span>
+    </div>
+    <div style="font-weight:700; color:var(--primary-dark);">বয়স: ২.৫+ বছর (৬০+ আসল ছবি ও ৯টি বিষয়)</div>
+  </footer>
+
+  <script>
+    /* ==========================================================================
+       STEP 7: CATEGORIES & REAL-PHOTO TRILINGUAL VOCABULARY DATASET
+       ========================================================================== */
+    const CATEGORIES = [
+      {
+        id: 'fruits-food',
+        titleBn: 'ফল ও খাবার',
+        titleEn: 'Fruits & Food',
+        titleAr: 'الفواكه والطعام',
+        coverPhoto: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=700&q=80'
+      },
+      {
+        id: 'animals-birds',
+        titleBn: 'পশু ও পাখি',
+        titleEn: 'Animals & Birds',
+        titleAr: 'الحيوانات والطيور',
+        coverPhoto: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=700&q=80'
+      },
+      {
+        id: 'body-parts',
+        titleBn: 'শরীরের অঙ্গপ্রত্যঙ্গ',
+        titleEn: 'My Body Parts',
+        titleAr: 'أعضاء الجسم',
+        coverPhoto: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=700&q=80'
+      },
+      {
+        id: 'vehicles',
+        titleBn: 'গাড়ি ও যানবাহন',
+        titleEn: 'Vehicles & Transport',
+        titleAr: 'المواصلات',
+        coverPhoto: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=700&q=80'
+      },
+      {
+        id: 'nature',
+        titleBn: 'প্রকৃতি ও আকাশ',
+        titleEn: 'Nature & Sky',
+        titleAr: 'الطبيعة والسماء',
+        coverPhoto: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=700&q=80'
+      },
+      {
+        id: 'daily-life',
+        titleBn: 'আমার দৈনন্দিন জীবন',
+        titleEn: 'My Daily Life',
+        titleAr: 'حياتي اليومية',
+        coverPhoto: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=700&q=80'
+      },
+      {
+        id: 'good-habits',
+        titleBn: 'আদব-কায়দা ও দোয়া',
+        titleEn: 'Good Manners & Words',
+        titleAr: 'الآداب الإسلامية',
+        coverPhoto: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=700&q=80'
+      },
+      {
+        id: 'colors',
+        titleBn: 'রঙ চিনি',
+        titleEn: 'Colors Around Us',
+        titleAr: 'الألوان',
+        coverPhoto: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=700&q=80'
+      },
+      {
+        id: 'numbers',
+        titleBn: 'সংখ্যা গণনা (১-৫)',
+        titleEn: 'Numbers 1 to 5',
+        titleAr: 'الأرقام',
+        coverPhoto: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=700&q=80'
+      }
+    ];
+
+    const VOCABULARY = [
+      // 1. FRUITS & FOOD (ফল ও খাবার)
+      { id: 'apple', category: 'fruits-food', bn: 'আপেল', en: 'Apple', ar: 'تُفَّاحَة', arPhonetic: 'তুফ্ফাহা', photo: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80' },
+      { id: 'banana', category: 'fruits-food', bn: 'কলা', en: 'Banana', ar: 'مَوْز', arPhonetic: 'মাওয', photo: 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80' },
+      { id: 'mango', category: 'fruits-food', bn: 'আম', en: 'Mango', ar: 'مَانْجُو', arPhonetic: 'মানজু', photo: 'https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80' },
+      { id: 'orange', category: 'fruits-food', bn: 'কমলা', en: 'Orange', ar: 'بُرْتُقَال', arPhonetic: 'বুরতুকাল', photo: 'https://images.unsplash.com/photo-1547514701-42782101795e?auto=format&fit=crop&w=800&q=80' },
+      { id: 'grapes', category: 'fruits-food', bn: 'আঙুর', en: 'Grapes', ar: 'عِنَب', arPhonetic: 'ইনাব', photo: 'https://images.unsplash.com/photo-1537640538966-79f369143f8f?auto=format&fit=crop&w=800&q=80' },
+      { id: 'strawberry', category: 'fruits-food', bn: 'স্ট্রবেরি', en: 'Strawberry', ar: 'فَرَاوْلَة', arPhonetic: 'ফারাওলাহ', photo: 'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=800&q=80' },
+      { id: 'milk', category: 'fruits-food', bn: 'দুধ', en: 'Milk', ar: 'حَلِيب', arPhonetic: 'হালীব', photo: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=800&q=80' },
+      { id: 'water', category: 'fruits-food', bn: 'পানি', en: 'Water', ar: 'مَاء', arPhonetic: 'মাআ', photo: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=800&q=80' },
+      { id: 'egg', category: 'fruits-food', bn: 'ডিম', en: 'Egg', ar: 'بَيْضَة', arPhonetic: 'বাইদাহ', photo: 'https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=800&q=80' },
+      { id: 'rice', category: 'fruits-food', bn: 'ভাত', en: 'Rice', ar: 'أُرُزّ', arPhonetic: 'উরুয', photo: 'https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=800&q=80' },
+      { id: 'bread', category: 'fruits-food', bn: 'রুটি', en: 'Bread', ar: 'خُبْز', arPhonetic: 'খুবয', photo: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80' },
+
+      // 2. ANIMALS & BIRDS (পশু ও পাখি)
+      { id: 'cat', category: 'animals-birds', bn: 'বিড়াল', en: 'Cat', ar: 'قِطَّة', arPhonetic: 'ক্বিত্তাহ', photo: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=800&q=80' },
+      { id: 'cow', category: 'animals-birds', bn: 'গরু', en: 'Cow', ar: 'بَقَرَة', arPhonetic: 'বাক্বারাহ', photo: 'https://images.unsplash.com/photo-1546445317-29f4545e9d53?auto=format&fit=crop&w=800&q=80' },
+      { id: 'dog', category: 'animals-birds', bn: 'কুকুর', en: 'Dog', ar: 'كَلْب', arPhonetic: 'কালব', photo: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=800&q=80' },
+      { id: 'bird', category: 'animals-birds', bn: 'পাখি', en: 'Bird', ar: 'طَائِر', arPhonetic: 'ত্বাইর', photo: 'https://images.unsplash.com/photo-1444464666168-49d633b86797?auto=format&fit=crop&w=800&q=80' },
+      { id: 'duck', category: 'animals-birds', bn: 'হাঁস', en: 'Duck', ar: 'بَطَّة', arPhonetic: 'বাত্তাহ', photo: 'https://images.unsplash.com/photo-1459682687441-7761439a709d?auto=format&fit=crop&w=800&q=80' },
+      { id: 'rabbit', category: 'animals-birds', bn: 'খরগোশ', en: 'Rabbit', ar: 'أَرْنَب', arPhonetic: 'আরনাব', photo: 'https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?auto=format&fit=crop&w=800&q=80' },
+      { id: 'lion', category: 'animals-birds', bn: 'সিংহ', en: 'Lion', ar: 'أَسَد', arPhonetic: 'আসাদ', photo: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=800&q=80' },
+      { id: 'elephant', category: 'animals-birds', bn: 'হাতি', en: 'Elephant', ar: 'فِيل', arPhonetic: 'ফীল', photo: 'https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&fit=crop&w=800&q=80' },
+      { id: 'horse', category: 'animals-birds', bn: 'ঘোড়া', en: 'Horse', ar: 'حِصَان', arPhonetic: 'হিসান', photo: 'https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=800&q=80' },
+      { id: 'fish', category: 'animals-birds', bn: 'মাছ', en: 'Fish', ar: 'سَمَكَة', arPhonetic: 'সামাকাহ', photo: 'https://images.unsplash.com/photo-1524704654690-b56c05c78a00?auto=format&fit=crop&w=800&q=80' },
+      { id: 'butterfly', category: 'animals-birds', bn: 'প্রজাপতি', en: 'Butterfly', ar: 'فَرَاشَة', arPhonetic: 'ফারাশাহ', photo: 'https://images.unsplash.com/photo-1452570053594-1b985d6ea890?auto=format&fit=crop&w=800&q=80' },
+
+      // 3. BODY PARTS (শরীরের অঙ্গপ্রত্যঙ্গ)
+      { id: 'eye', category: 'body-parts', bn: 'চোখ', en: 'Eye', ar: 'عَيْن', arPhonetic: 'আইন', photo: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=800&q=80' },
+      { id: 'hand', category: 'body-parts', bn: 'হাত', en: 'Hand', ar: 'يَد', arPhonetic: 'ইয়াদ', photo: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80' },
+      { id: 'foot', category: 'body-parts', bn: 'পা', en: 'Foot', ar: 'قَدَم', arPhonetic: 'ক্বাদাম', photo: 'https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=800&q=80' },
+      { id: 'smile-teeth', category: 'body-parts', bn: 'দাঁত', en: 'Teeth', ar: 'أَسْنَان', arPhonetic: 'আসনান', photo: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800&q=80' },
+      { id: 'ear', category: 'body-parts', bn: 'কান', en: 'Ear', ar: 'أُذُن', arPhonetic: 'উযুন', photo: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=800&q=80' },
+      { id: 'hair', category: 'body-parts', bn: 'চুল', en: 'Hair', ar: 'شَعْر', arPhonetic: 'শাআর', photo: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=800&q=80' },
+
+      // 4. VEHICLES (গাড়ি ও যানবাহন)
+      { id: 'car', category: 'vehicles', bn: 'গাড়ি', en: 'Car', ar: 'سَيَّارَة', arPhonetic: 'সাইয়ারাহ', photo: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80' },
+      { id: 'bus', category: 'vehicles', bn: 'বাস', en: 'Bus', ar: 'حَافِلَة', arPhonetic: 'হাফিলাহ', photo: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80' },
+      { id: 'train', category: 'vehicles', bn: 'ট্রেন', en: 'Train', ar: 'قِطَار', arPhonetic: 'ক্বিতার', photo: 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=800&q=80' },
+      { id: 'airplane', category: 'vehicles', bn: 'বিমান', en: 'Airplane', ar: 'طَائِرَة', arPhonetic: 'ত্বায়িরাহ', photo: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80' },
+      { id: 'bicycle', category: 'vehicles', bn: 'সাইকেল', en: 'Bicycle', ar: 'دَرَّاجَة', arPhonetic: 'দাররাজাহ', photo: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=800&q=80' },
+      { id: 'boat', category: 'vehicles', bn: 'নৌকা', en: 'Boat', ar: 'قَارِب', arPhonetic: 'ক্বারিব', photo: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80' },
+
+      // 5. NATURE & SKY (প্রকৃতি ও আকাশ)
+      { id: 'sun', category: 'nature', bn: 'সূর্য', en: 'Sun', ar: 'شَمْس', arPhonetic: 'শামস', photo: 'https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=800&q=80' },
+      { id: 'moon', category: 'nature', bn: 'চাঁদ', en: 'Moon', ar: 'قَمَر', arPhonetic: 'ক্বামার', photo: 'https://images.unsplash.com/photo-1532693322450-2cb5c511067d?auto=format&fit=crop&w=800&q=80' },
+      { id: 'flower', category: 'nature', bn: 'ফুল', en: 'Flower', ar: 'زَهْرَة', arPhonetic: 'যাহরাহ', photo: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=800&q=80' },
+      { id: 'tree', category: 'nature', bn: 'গাছ', en: 'Tree', ar: 'شَجَرَة', arPhonetic: 'শাজারাহ', photo: 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=800&q=80' },
+      { id: 'rain', category: 'nature', bn: 'বৃষ্টি', en: 'Rain', ar: 'مَطَر', arPhonetic: 'মাত্বার', photo: 'https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=800&q=80' },
+
+      // 6. MY DAILY LIFE (আমার দৈনন্দিন জীবন)
+      { id: 'mother', category: 'daily-life', bn: 'মা', en: 'Mother', ar: 'أُمّ', arPhonetic: 'উম্ম', photo: 'https://images.unsplash.com/photo-1492725764893-90b379c2b6e7?auto=format&fit=crop&w=800&q=80' },
+      { id: 'father', category: 'daily-life', bn: 'বাবা', en: 'Father', ar: 'أَب', arPhonetic: 'আব', photo: 'https://images.unsplash.com/photo-1510154221590-ff63e90a136f?auto=format&fit=crop&w=800&q=80' },
+      { id: 'book', category: 'daily-life', bn: 'বই', en: 'Book', ar: 'كِتَاب', arPhonetic: 'কিতাব', photo: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=80' },
+      { id: 'ball', category: 'daily-life', bn: 'বল', en: 'Ball', ar: 'كُرَة', arPhonetic: 'কুরাহ', photo: 'https://images.unsplash.com/photo-1575361204480-aadea25e6e68?auto=format&fit=crop&w=800&q=80' },
+      { id: 'shoes', category: 'daily-life', bn: 'জুতা', en: 'Shoes', ar: 'حِذَاء', arPhonetic: 'হিযা', photo: 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?auto=format&fit=crop&w=800&q=80' },
+      { id: 'bed', category: 'daily-life', bn: 'বিছানা', en: 'Bed', ar: 'سَرِير', arPhonetic: 'সারীর', photo: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80' },
+      { id: 'clock', category: 'daily-life', bn: 'ঘড়ি', en: 'Clock', ar: 'سَاعَة', arPhonetic: 'সাআহ', photo: 'https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?auto=format&fit=crop&w=800&q=80' },
+
+      // 7. GOOD HABITS & GREETINGS (আদব-কায়দা ও দোয়া)
+      { id: 'salam', category: 'good-habits', bn: 'সালাম', en: 'Peace be upon you', ar: 'السَّلَامُ عَلَيْكُمْ', arPhonetic: 'আসসালামু আলাইকুম', photo: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=800&q=80' },
+      { id: 'bismillah', category: 'good-habits', bn: 'বিসমিল্লাহ', en: 'In the name of Allah', ar: 'بِسْمِ اللَّهِ', arPhonetic: 'বিসমিল্লাহ', photo: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80' },
+      { id: 'alhamdulillah', category: 'good-habits', bn: 'আলহামদুলিল্লাহ', en: 'Praise be to Allah', ar: 'الْحَمْدُ لِلَّهِ', arPhonetic: 'আলহামদুলিল্লাহ', photo: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800&q=80' },
+      { id: 'thankyou', category: 'good-habits', bn: 'ধন্যবাদ', en: 'Thank You', ar: 'شُكْرًا', arPhonetic: 'শুকরান', photo: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=800&q=80' },
+
+      // 8. COLORS (রঙ চিনি)
+      { id: 'red', category: 'colors', bn: 'লাল', en: 'Red', ar: 'أَحْمَر', arPhonetic: 'আহমার', colorHex: '#EF4444', photo: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80' },
+      { id: 'blue', category: 'colors', bn: 'নীল', en: 'Blue', ar: 'أَزْرَق', arPhonetic: 'আযরাক্ব', colorHex: '#3B82F6', photo: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80' },
+      { id: 'green', category: 'colors', bn: 'সবুজ', en: 'Green', ar: 'أَخْضَر', arPhonetic: 'আখদার', colorHex: '#10B981', photo: 'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=800&q=80' },
+      { id: 'yellow', category: 'colors', bn: 'হলুদ', en: 'Yellow', ar: 'أَصْفَر', arPhonetic: 'আসফার', colorHex: '#FACC15', photo: 'https://images.unsplash.com/photo-1470509037663-253afd7f0f51?auto=format&fit=crop&w=800&q=80' },
+
+      // 9. NUMBERS (সংখ্যা গণনা ১-৫)
+      { id: 'one', category: 'numbers', bn: 'এক (১)', en: 'One (1)', ar: 'وَاحِد (١)', arPhonetic: 'ওয়াহিদ', speakBn: 'এক', speakEn: 'One', speakAr: 'واحد', photo: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80' },
+      { id: 'two', category: 'numbers', bn: 'দুই (২)', en: 'Two (2)', ar: 'اِثْنَان (٢)', arPhonetic: 'ইসনান', speakBn: 'দুই', speakEn: 'Two', speakAr: 'اثنان', photo: 'https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=80' },
+      { id: 'three', category: 'numbers', bn: 'তিন (৩)', en: 'Three (3)', ar: 'ثَلَاثَة (٣)', arPhonetic: 'সালাসাহ', speakBn: 'তিন', speakEn: 'Three', speakAr: 'ثلاثة', photo: 'https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80' },
+      { id: 'four', category: 'numbers', bn: 'চার (৪)', en: 'Four (4)', ar: 'أَرْبَعَة (٤)', arPhonetic: 'আরবাআহ', speakBn: 'চার', speakEn: 'Four', speakAr: 'أربعة', photo: 'https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=800&q=80' },
+      { id: 'five', category: 'numbers', bn: 'পাঁচ (৫)', en: 'Five (5)', ar: 'خَمْسَة (٥)', arPhonetic: 'খামসাহ', speakBn: 'পাঁচ', speakEn: 'Five', speakAr: 'خمسة', photo: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80' }
+    ];
+
+    /* ==========================================================================
+       STEP 8: FALLBACK SVG IMAGE GENERATOR (IF INTERNET PHOTO FAILS)
+       ========================================================================== */
+    function handleImageError(imgEl, titleText) {
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+        <rect width="600" height="400" fill="#FFF0F5"/>
+        <circle cx="300" cy="170" r="90" fill="#FFD166"/>
+        <text x="300" y="320" font-family="sans-serif" font-size="36" font-weight="bold" fill="#2B2D42" text-anchor="middle">${titleText}</text>
+      </svg>`;
+      imgEl.onerror = null;
+      imgEl.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+    }
+
+    /* ==========================================================================
+       STEP 9: 4-STAGE AUDIO ENGINE (SOLVES BENGALI & ARABIC AUDIO PLAYBACK)
+       ========================================================================== */
+    const AudioEngine = {
+      activeAudioEl: null,
+      audioCtx: null,
+
+      stopAll() {
+        if (this.activeAudioEl) {
+          this.activeAudioEl.pause();
+          this.activeAudioEl.removeAttribute('src');
+          this.activeAudioEl = null;
+        }
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+        }
+        document.querySelectorAll('.lang-card.playing').forEach(el => el.classList.remove('playing'));
+      },
+
+      playChime(type = 'tap') {
+        try {
+          if (!this.audioCtx) {
+            this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          }
+          if (this.audioCtx.state === 'suspended') {
+            this.audioCtx.resume();
+          }
+          const ctx = this.audioCtx;
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+
+          const now = ctx.currentTime;
+          if (type === 'success') {
+            osc.frequency.setValueAtTime(523.25, now);
+            osc.frequency.setValueAtTime(659.25, now + 0.1);
+            osc.frequency.setValueAtTime(783.99, now + 0.2);
+            gain.gain.setValueAtTime(0.14, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+            osc.start(now);
+            osc.stop(now + 0.45);
+          } else {
+            osc.frequency.setValueAtTime(480, now);
+            gain.gain.setValueAtTime(0.06, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+            osc.start(now);
+            osc.stop(now + 0.12);
+          }
+        } catch (e) {}
+      },
+
+      setStatus(msg) {
+        const el = document.getElementById('audioStatusText');
+        if (el) el.textContent = msg;
+      },
+
+      speak(item, lang, cardElementId = null) {
+        return new Promise((resolve) => {
+          this.stopAll();
+          this.playChime('tap');
+
+          if (cardElementId) {
+            const cardEl = document.getElementById(cardElementId);
+            if (cardEl) cardEl.classList.add('playing');
+          }
+
+          let resolved = false;
+          const finish = () => {
+            if (resolved) return;
+            resolved = true;
+            if (cardElementId) {
+              const cardEl = document.getElementById(cardElementId);
+              if (cardEl) cardEl.classList.remove('playing');
+            }
+            resolve();
+          };
+
+          // Determine clean word text to pronounce
+          let textToSpeak = item[lang];
+          if (lang === 'bn' && item.speakBn) textToSpeak = item.speakBn;
+          if (lang === 'en' && item.speakEn) textToSpeak = item.speakEn;
+          if (lang === 'ar' && item.speakAr) textToSpeak = item.speakAr;
+
+          // STAGE 1: Try Local MP3 File first (`assets/audio/apple-bn.mp3`)
+          const localPath = `assets/audio/${item.id}-${lang}.mp3`;
+          const localAudio = document.createElement('audio');
+          localAudio.src = localPath;
+          this.activeAudioEl = localAudio;
+
+          let fallbackTriggered = false;
+          const triggerCloudFallback = () => {
+            if (fallbackTriggered) return;
+            fallbackTriggered = true;
+            this.playCloudTTS(textToSpeak, lang, item, finish);
+          };
+
+          localAudio.oncanplaythrough = () => {
+            if (fallbackTriggered) return;
+            this.setStatus(`🔊 লোকাল MP3 বাজছে: ${localPath}`);
+            localAudio.play().catch(triggerCloudFallback);
+          };
+          localAudio.onended = finish;
+          localAudio.onerror = triggerCloudFallback;
+        });
+      },
+
+      playCloudTTS(text, lang, item, onDone) {
+        const tlMap = { bn: 'bn', en: 'en', ar: 'ar' };
+        const tl = tlMap[lang] || 'en';
+        const urlPrimary = `https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=${tl}&dt=t&q=${encodeURIComponent(text)}`;
+
+        // Use a DOM-attached audio element with referrerPolicy="no-referrer"
+        const streamAudio = document.createElement('audio');
+        streamAudio.setAttribute('referrerpolicy', 'no-referrer');
+        streamAudio.src = urlPrimary;
+        this.activeAudioEl = streamAudio;
+
+        const langNames = { bn: 'বাংলা', en: 'English', ar: 'العربية (আরবি)' };
+        this.setStatus(`🔊 উচ্চারণ হচ্ছে (${langNames[lang]}): "${text}"`);
+
+        let fallbackUsed = false;
+        const useSpeechFallback = () => {
+          if (fallbackUsed) return;
+          fallbackUsed = true;
+          this.playWebSpeechFallback(text, lang, item, onDone);
+        };
+
+        streamAudio.onended = onDone;
+        streamAudio.onerror = useSpeechFallback;
+
+        const playPromise = streamAudio.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(useSpeechFallback);
+        }
+      },
+
+      playWebSpeechFallback(text, lang, item, onDone) {
+        if (!('speechSynthesis' in window)) {
+          onDone();
+          return;
+        }
+
+        const voices = window.speechSynthesis.getVoices();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.rate = 0.85;
+
+        if (lang === 'bn') {
+          const bnVoice = voices.find(v => v.lang.toLowerCase().includes('bn') || v.lang.toLowerCase().includes('hi'));
+          if (bnVoice) {
+            utter.voice = bnVoice;
+            utter.lang = bnVoice.lang;
+          } else {
+            utter.lang = 'bn-BD';
+          }
+        } else if (lang === 'ar') {
+          const arVoice = voices.find(v => v.lang.toLowerCase().includes('ar'));
+          if (arVoice) {
+            utter.voice = arVoice;
+            utter.lang = arVoice.lang;
+          } else if (item.arPhonetic) {
+            utter.text = item.arPhonetic;
+            utter.lang = 'bn-BD';
+          }
+        } else {
+          utter.lang = 'en-US';
+        }
+
+        utter.onend = onDone;
+        utter.onerror = onDone;
+        window.speechSynthesis.speak(utter);
+      },
+
+      async playAllThree(item) {
+        await this.speak(item, 'bn', 'card-bn');
+        await new Promise(r => setTimeout(r, 350));
+        await this.speak(item, 'en', 'card-en');
+        await new Promise(r => setTimeout(r, 350));
+        await this.speak(item, 'ar', 'card-ar');
+      }
+    };
+
+    /* ==========================================================================
+       STEP 10: APPLICATION CONTROLLER (VIEWS, NAVIGATION, GAMES & EXPORT)
+       ========================================================================== */
+    const App = {
+      currentCategory: 'fruits-food',
+      currentIndex: 0,
+      tapLangCycle: 0,
+      gameType: 'find-pic',
+      gameLang: 'bn',
+      gameTarget: null,
+      gameOptions: [],
+
+      init() {
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.getVoices();
+        }
+        this.goHome();
+      },
+
+      goHome() {
+        AudioEngine.stopAll();
+        const root = document.getElementById('appRoot');
+
+        const categoryCardsHtml = CATEGORIES.map(cat => {
+          const count = VOCABULARY.filter(v => v.category === cat.id).length;
+          return `
+            <article class="category-card" onclick="App.openCategory('${cat.id}')">
+              <div class="category-img-wrap">
+                <img src="${cat.coverPhoto}" alt="${cat.titleBn}" loading="lazy" onerror="handleImageError(this, '${cat.titleBn}')" />
+                <span class="category-count-badge">${count} টি ছবি</span>
+              </div>
+              <div class="category-body">
+                <div>
+                  <div class="category-title-bn">${cat.titleBn}</div>
+                  <div class="category-title-sub">${cat.titleEn} • ${cat.titleAr}</div>
+                </div>
+                <button class="open-book-btn">📖 বই খুলুন</button>
+              </div>
+            </article>
+          `;
+        }).join('');
+
+        root.innerHTML = `
+          <section class="hero-banner">
+            <h1>আমার তিন ভাষার ছবির বই</h1>
+            <p>খেলতে খেলতে আসল ছবি দেখে বাংলা, ইংরেজি ও আরবি শিখি!</p>
+            <div class="hero-badges">
+              <span class="badge-pill">📸 ৬০+ আসল ছবি (Real Photos)</span>
+              <span class="badge-pill">🔊 বাংলা • English • العربية অডিও</span>
+              <span class="badge-pill">👧 ২.৫+ বছরের সোনামণির জন্য</span>
+            </div>
+          </section>
+
+          <section class="game-launch-bar">
+            <div class="game-card-banner" onclick="App.startGame('find-pic')">
+              <div>
+                <h3 style="font-size:1.15rem;">🎮 খেলা ১: ছবিটি খুঁজুন</h3>
+                <p style="font-size:0.88rem; color:var(--text-muted);">শব্দ শুনে সঠিক ছবিতে ট্যাপ করো</p>
+              </div>
+              <span style="font-size:2rem;">🖼️</span>
+            </div>
+            <div class="game-card-banner" onclick="App.startGame('match-word')">
+              <div>
+                <h3 style="font-size:1.15rem;">🧩 খেলা ২: শব্দ মেলাও</h3>
+                <p style="font-size:0.88rem; color:var(--text-muted);">ছবি দেখে সঠিক শব্দটি বেছে নাও</p>
+              </div>
+              <span style="font-size:2rem;">⭐</span>
+            </div>
+          </section>
+
+          <h2 class="section-heading">📂 পছন্দের বিষয় বেছে নাও (৯টি বিষয়)</h2>
+          <section class="category-grid">
+            ${categoryCardsHtml}
+          </section>
+        `;
+      },
+
+      openCategory(categoryId) {
+        this.currentCategory = categoryId;
+        this.currentIndex = 0;
+        this.renderBookPage();
+      },
+
+      getCategoryItems() {
+        return VOCABULARY.filter(v => v.category === this.currentCategory);
+      },
+
+      renderBookPage() {
+        AudioEngine.stopAll();
+        const items = this.getCategoryItems();
+        const item = items[this.currentIndex];
+        const catInfo = CATEGORIES.find(c => c.id === this.currentCategory);
+        const root = document.getElementById('appRoot');
+
+        const dotsHtml = items.map((_, idx) => `
+          <span class="progress-dot ${idx === this.currentIndex ? 'active' : ''}"
+                onclick="App.jumpToPage(${idx})"></span>
+        `).join('');
+
+        const colorSwatchHtml = item.colorHex
+          ? `<div class="color-badge-overlay" style="background:${item.colorHex};"></div>`
+          : '';
+
+        root.innerHTML = `
+          <section class="book-view">
+            <div class="book-top-progress">
+              <div style="font-weight:700; font-size:1.05rem;">
+                📘 ${catInfo.titleBn} (${this.currentIndex + 1} / ${items.length})
+              </div>
+              <div class="progress-pill-bar">${dotsHtml}</div>
+            </div>
+
+            <div class="book-card">
+              <!-- Large Real Photograph -->
+              <div class="photo-stage" id="photoStage" onclick="App.onPhotoTap()">
+                ${colorSwatchHtml}
+                <img src="${item.photo}" alt="${item.en}" onerror="handleImageError(this, '${item.bn}')" />
+                <div class="photo-tap-hint">👆 ছবিতে ট্যাপ করলে কথা বলবে!</div>
+              </div>
+
+              <!-- 3 Language Cards -->
+              <div class="words-grid">
+                <div class="lang-card bn-card" id="card-bn" onclick="App.speakCurrent('bn')">
+                  <span class="lang-label">বাংলা</span>
+                  <div class="word-text-bn">${item.bn}</div>
+                  <div class="phonetic-hint">বাংলা উচ্চারণ</div>
+                  <button class="speak-btn bn-btn">🔊 বাংলা শুনুন</button>
+                </div>
+
+                <div class="lang-card en-card" id="card-en" onclick="App.speakCurrent('en')">
+                  <span class="lang-label">English</span>
+                  <div class="word-text-en">${item.en}</div>
+                  <div class="phonetic-hint">ইংরেজি উচ্চারণ</div>
+                  <button class="speak-btn en-btn">🔊 English</button>
+                </div>
+
+                <div class="lang-card ar-card" id="card-ar" onclick="App.speakCurrent('ar')">
+                  <span class="lang-label">العربية (আরবি)</span>
+                  <div class="word-text-ar" dir="rtl">${item.ar}</div>
+                  <div class="phonetic-hint">উচ্চারণ: ${item.arPhonetic}</div>
+                  <button class="speak-btn ar-btn">🔊 العربية</button>
+                </div>
+              </div>
+
+              <!-- Navigation & Play All -->
+              <div class="book-controls-row">
+                <button class="page-nav-btn" onclick="App.prevPage()" ${this.currentIndex === 0 ? 'disabled' : ''}>
+                  ⬅️ আগের পাতা
+                </button>
+
+                <button class="play-all-btn" onclick="App.playAllCurrent()">
+                  ▶️ তিনটি ভাষাই পরপর শুনুন
+                </button>
+
+                <button class="page-nav-btn" onclick="App.nextPage()" ${this.currentIndex === items.length - 1 ? 'disabled' : ''}>
+                  পরের পাতা ➡️
+                </button>
+              </div>
+            </div>
+          </section>
+        `;
+      },
+
+      speakCurrent(lang) {
+        const item = this.getCategoryItems()[this.currentIndex];
+        AudioEngine.speak(item, lang, `card-${lang}`);
+      },
+
+      playAllCurrent() {
+        const item = this.getCategoryItems()[this.currentIndex];
+        AudioEngine.playAllThree(item);
+      },
+
+      onPhotoTap() {
+        const stage = document.getElementById('photoStage');
+        if (stage) {
+          stage.classList.remove('bounce');
+          void stage.offsetWidth;
+          stage.classList.add('bounce');
+        }
+        const langs = ['bn', 'en', 'ar'];
+        const lang = langs[this.tapLangCycle % 3];
+        this.tapLangCycle++;
+        this.speakCurrent(lang);
+      },
+
+      prevPage() {
+        if (this.currentIndex > 0) {
+          this.currentIndex--;
+          this.renderBookPage();
+        }
+      },
+
+      nextPage() {
+        const items = this.getCategoryItems();
+        if (this.currentIndex < items.length - 1) {
+          this.currentIndex++;
+          this.renderBookPage();
+        }
+      },
+
+      jumpToPage(idx) {
+        this.currentIndex = idx;
+        this.renderBookPage();
+      },
+
+      /* ========================================================================
+         EDUCATIONAL GAMES (FIND PICTURE & MATCH WORD)
+         ======================================================================== */
+      startGame(type) {
+        this.gameType = type;
+        this.nextGameRound();
+      },
+
+      setGameLang(lang) {
+        this.gameLang = lang;
+        this.nextGameRound();
+      },
+
+      nextGameRound() {
+        AudioEngine.stopAll();
+        const shuffled = [...VOCABULARY].sort(() => 0.5 - Math.random());
+        this.gameOptions = shuffled.slice(0, 3);
+        this.gameTarget = this.gameOptions[Math.floor(Math.random() * 3)];
+
+        const root = document.getElementById('appRoot');
+        const targetWord = this.gameTarget[this.gameLang];
+
+        if (this.gameType === 'find-pic') {
+          const cardsHtml = this.gameOptions.map(opt => `
+            <div class="game-choice-card" onclick="App.checkGameAnswer('${opt.id}')">
+              <img src="${opt.photo}" alt="${opt.en}" onerror="handleImageError(this, '${opt.bn}')" />
+              <div style="font-weight:700; font-size:1.15rem;">${opt[this.gameLang]}</div>
+            </div>
+          `).join('');
+
+          root.innerHTML = `
+            <section class="game-container">
+              <div class="game-lang-tabs">
+                <button class="lang-tab ${this.gameLang === 'bn' ? 'active' : ''}" onclick="App.setGameLang('bn')">বাংলা</button>
+                <button class="lang-tab ${this.gameLang === 'en' ? 'active' : ''}" onclick="App.setGameLang('en')">English</button>
+                <button class="lang-tab ${this.gameLang === 'ar' ? 'active' : ''}" onclick="App.setGameLang('ar')">العربية</button>
+              </div>
+
+              <h2 style="font-size:1.55rem; margin-bottom:10px;">🔎 "${targetWord}" ছবিটি কোনটি?</h2>
+              <button class="nav-btn primary" style="margin:0 auto;" onclick="AudioEngine.speak(App.gameTarget, App.gameLang)">
+                🔊 শব্দটি শুনুন
+              </button>
+
+              <div class="game-choices-grid">${cardsHtml}</div>
+              <div class="game-feedback" id="gameFeedback">ছবিতে ট্যাপ করো! 🌟</div>
+            </section>
+          `;
+        } else {
+          const wordBtnsHtml = this.gameOptions.map(opt => `
+            <div class="game-choice-card" onclick="App.checkGameAnswer('${opt.id}')" style="padding:22px;">
+              <div style="font-size:1.9rem; font-weight:800; color:var(--primary-dark);">${opt[this.gameLang]}</div>
+              <div style="font-size:0.9rem; color:var(--text-muted);">🔊 বাছাই করো</div>
+            </div>
+          `).join('');
+
+          root.innerHTML = `
+            <section class="game-container">
+              <div class="game-lang-tabs">
+                <button class="lang-tab ${this.gameLang === 'bn' ? 'active' : ''}" onclick="App.setGameLang('bn')">বাংলা</button>
+                <button class="lang-tab ${this.gameLang === 'en' ? 'active' : ''}" onclick="App.setGameLang('en')">English</button>
+                <button class="lang-tab ${this.gameLang === 'ar' ? 'active' : ''}" onclick="App.setGameLang('ar')">العربية</button>
+              </div>
+
+              <h2 style="font-size:1.45rem; margin-bottom:12px;">🧩 ছবিটি দেখে সঠিক শব্দটি বাছাই করো:</h2>
+              <div class="photo-stage" style="max-width:340px; height:210px; margin:0 auto;" onclick="AudioEngine.speak(App.gameTarget, App.gameLang)">
+                <img src="${this.gameTarget.photo}" alt="${this.gameTarget.en}" onerror="handleImageError(this, '${this.gameTarget.bn}')" />
+              </div>
+
+              <div class="game-choices-grid">${wordBtnsHtml}</div>
+              <div class="game-feedback" id="gameFeedback">সঠিক শব্দটিতে ট্যাপ করো! 🌟</div>
+            </section>
+          `;
+        }
+
+        setTimeout(() => {
+          AudioEngine.speak(this.gameTarget, this.gameLang);
+        }, 250);
+      },
+
+      checkGameAnswer(selectedId) {
+        const fb = document.getElementById('gameFeedback');
+        if (selectedId === this.gameTarget.id) {
+          AudioEngine.playChime('success');
+          fb.innerHTML = '🎉 মাশাআল্লাহ! একদম সঠিক হয়েছে! ⭐⭐⭐';
+          fb.style.color = '#059669';
+          setTimeout(() => this.nextGameRound(), 1400);
+        } else {
+          const picked = VOCABULARY.find(v => v.id === selectedId);
+          if (picked) AudioEngine.speak(picked, this.gameLang);
+          fb.innerHTML = '😊 আবার চেষ্টা করো সোনামণি! তুমি পারবে!';
+          fb.style.color = '#D97706';
+        }
+      },
+
+      /* ========================================================================
+         PARENT & DEVELOPER GUIDE (AUDIO CHECKLIST & JSON EXPORT)
+         ======================================================================== */
+      renderParentGuide() {
+        AudioEngine.stopAll();
+        const root = document.getElementById('appRoot');
+        const audioFilesList = VOCABULARY.map(v =>
+          `assets/audio/${v.id}-bn.mp3  |  assets/audio/${v.id}-en.mp3  |  assets/audio/${v.id}-ar.mp3`
+        ).join('\n');
+
+        root.innerHTML = `
+          <section class="guide-box">
+            <h2 style="margin-bottom:10px;">📋 অভিভাবক ও ডেভেলপার গাইড (Parent & Developer Guide)</h2>
+            <p>১. <strong>অডিও সিস্টেম:</strong> প্রতিটি শব্দে ট্যাপ করলে অ্যাপটি প্রথমে <code>assets/audio/</code> ফোল্ডারে আপনার রেকর্ড করা MP3 খুঁজবে। না পেলে স্বয়ংক্রিয়ভাবে ইন্টারনেট থেকে বাংলা, ইংরেজি এবং আরবি উচ্চারণ স্ট্রিম করবে।</p>
+            <p style="margin-top:8px;">২. <strong>নিজের ভয়েস রেকর্ড করে যুক্ত করতে চাইলে:</strong> আপনি বা আপনার স্ত্রী চাইলে মেয়ের জন্য নিজেদের কণ্ঠে MP3 রেকর্ড করে নিচের ফাইলগুলোর নামে <code>assets/audio/</code> ফোল্ডারে রাখতে পারেন:</p>
+            <textarea class="code-export-area" readonly>${audioFilesList}</textarea>
+
+            <h3 style="margin-top:18px;">📦 সম্পূর্ণ ভোকাবুলারি ডাটা (vocabulary.json)</h3>
+            <textarea class="code-export-area" readonly>${JSON.stringify(VOCABULARY, null, 2)}</textarea>
+          </section>
+        `;
+      }
+    };
+
+    window.addEventListener('DOMContentLoaded', () => App.init());
+  </script>
+</body>
+</html>
